@@ -109,7 +109,6 @@ def parse_fallback(text):
     # Try to extract comment
     comment_match = re.search(r"(comment|评语)[:：]\s*[\"']?([^\"'}\n]+)", text, re.IGNORECASE)
     comment = comment_match.group(2).strip()[:30] if comment_match else text[-30:] if len(text) > 30 else text
-
     return score, comment
 
 
