@@ -55,24 +55,23 @@ def grade_assignment(client, model, questions, answers, student_files):
         #     messages=[{"role": "user", "content": content}],
         #     response_format={"type": "json_object"}
         # )
-        # return response.choices[0].message.content
+        return response.choices[0].message.content
     except Exception as e:
         logger.error(f"调用LLM失败: {e}")
         return None
 
-def save_raw_response(content, student_id, responses_dir, attempt_n=1):
-    """保存LLM的原始响应
+def save_raw_response(content, student_id, responses_dir):
+    """保存LLM的原始响应（覆盖方式，只保留最新回复）
     
     Args:
         content: LLM返回的原始内容
         student_id: 学号
         responses_dir: 响应保存目录
-        attempt_n: 评分次数
     """
     os.makedirs(responses_dir, exist_ok=True)
-    path = os.path.join(responses_dir, f"{student_id}_grading_attempt_{attempt_n}.txt")
-    if utils.write_file_content(path, content):
-        logger.info(f"学号 {student_id} 的第{attempt_n}次原始评分已保存至 {path}")
+    path = os.path.join(responses_dir, f"{student_id}.txt")
+    if not utils.write_file_content(path, content):
+        logger.info(f"学号 {student_id} 的LLM响应信息保存出错")
 
 
 def generate_comment_from_score(client, model, score):
