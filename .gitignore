@@ -5,3 +5,8 @@
 __pycache__/
 
 resources/answers.pdf
+outputs/hw_1/*.pdf
+outputs/responses/*.txt
+data/hw_1/*.pdf
+data/hw_1/*.jpg
+data/hw_1/*.png
